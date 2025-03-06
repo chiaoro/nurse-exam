@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>專科護理師線上筆試倒數</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #timer {
+            font-size: 48px;
+            color: red;
+            margin: 20px 0;
+        }
+        p {
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        const targetTime = new Date('2025-03-13T16:30:00').getTime();  // 調整為正式時間
+        const A_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdDMSuR47DPyr6wdqCtrPlmHl610_QrCX1g_zvjeExp5GYicQ/viewform?usp=header';  // 換成A卷網址
+        const B_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfOQW1b7qrqK6TpWoEFOx0OCSXUf_NIX0kJwucZfcnQJQvKsw/viewform?usp=dialog';  // 換成B卷網址
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetTime - now;
+
+            if (diff <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer').innerText = '00:00:00';
+                setTimeout(() => {
+                    const destination = Math.random() < 0.5 ? A_FORM_URL : B_FORM_URL;
+                    window.location.href = destination;
+                }, 1000);
+            } else {
+                const days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+                const minutes = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
+                const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+                document.getElementById('timer').innerText = `${days}:${hours}:${minutes}:${seconds}`;
+            }
+        }
+
+        let timerInterval = setInterval(updateCountdown, 1000);
+    </script>
+</head>
+<body>
+    <h1>專科護理師線上筆試倒數</h1>
+    <h2>Countdown to Exam Start</h2>
+    <div id="timer">--:--:--:--</div>
+    <p>請保持此頁開啟，考試時間到將自動進入考場。</p>
+</body>
+</html>
